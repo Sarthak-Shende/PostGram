@@ -15,6 +15,20 @@ export const PostProvider = ({ children }) => {
 		}
 	};
 
+	const updatePost = async (postId, formData) => {
+		try {
+			const response = await axios.put(
+				`http://localhost:5000/api/posts/${postId}`,
+				formData
+			);
+			setPosts(
+				posts.map((post) => (post._id === postId ? response.data : post))
+			);
+		} catch (error) {
+			console.error("Error updating post:", error);
+		}
+	};
+
 
 	const createPost = async (formData) => {
 		try {
@@ -35,7 +49,7 @@ export const PostProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<PostContext.Provider value={{  fetchPosts, createPost, posts }}>
+		<PostContext.Provider value={{  updatePost,fetchPosts, createPost, posts }}>
 			{children}
 		</PostContext.Provider>
 	);
