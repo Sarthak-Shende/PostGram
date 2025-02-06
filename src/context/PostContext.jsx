@@ -8,7 +8,9 @@ export const PostProvider = ({ children }) => {
 
 	const fetchPosts = async () => {
 		try {
-			const response = await axios.get("http://localhost:5000/api/posts");
+			const response = await axios.get(
+				"https://postgram-server-zoyv.onrender.com/api/posts"
+			);
 			setPosts(response.data);
 		} catch (error) {
 			console.error("Error fetching posts:", error);
@@ -18,7 +20,7 @@ export const PostProvider = ({ children }) => {
 	const updatePost = async (postId, formData) => {
 		try {
 			const response = await axios.put(
-				`http://localhost:5000/api/posts/${postId}`,
+				`https://postgram-server-zoyv.onrender.com/api/posts/${postId}`,
 				formData
 			);
 			setPosts(
@@ -29,11 +31,10 @@ export const PostProvider = ({ children }) => {
 		}
 	};
 
-
 	const createPost = async (formData) => {
 		try {
 			const response = await axios.post(
-				"http://localhost:5000/api/posts",
+				"https://postgram-server-zoyv.onrender.com/api/posts",
 				formData
 			);
 			setPosts([...posts, response.data]);
@@ -42,14 +43,12 @@ export const PostProvider = ({ children }) => {
 		}
 	};
 
-	
-
 	useEffect(() => {
 		fetchPosts();
 	}, []);
 
 	return (
-		<PostContext.Provider value={{  updatePost,fetchPosts, createPost, posts }}>
+		<PostContext.Provider value={{ updatePost, fetchPosts, createPost, posts }}>
 			{children}
 		</PostContext.Provider>
 	);
